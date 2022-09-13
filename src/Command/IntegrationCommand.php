@@ -7,6 +7,7 @@ namespace ComposerIntegration\Command;
 use Composer\Command\BaseCommand;
 use Composer\Factory;
 use Composer\Util\Platform;
+use ComposerIntegration\Env\EnvHandler;
 use ComposerIntegration\Util\CacheHelper;
 use ComposerIntegration\Util\ComposerHelper;
 use Symfony\Component\Console\Input\InputArgument;
@@ -55,6 +56,11 @@ final class IntegrationCommand extends BaseCommand
         $workingDir = Platform::getCwd();
 
         Platform::putEnv('COMPOSER', $integrationComposer);
+
+        $integrationEnv = ComposerHelper::getIntegrationEnv($composer, $integration);
+        if ('' !== $integrationEnv && EnvHandler::hasEnv($workingDir)) {
+            EnvHandler::updateAppEnv($workingDir, $integrationEnv);
+        }
 
         $installCommand = sprintf(self::COMPOSER_BASE_TEMPLATE, $integrationComposer, 'install', $workingDir);
 
