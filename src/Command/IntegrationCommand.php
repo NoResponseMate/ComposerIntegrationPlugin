@@ -41,6 +41,12 @@ final class IntegrationCommand extends BaseCommand
         $integrationComposer = $integrationCacheDir . DIRECTORY_SEPARATOR . 'composer.json';
 
         $integrationRequired = ComposerHelper::getIntegrationRequired($composer, $integration);
+        if ([] === $integrationRequired) {
+            $output->writeln('Integration "' . $integration . '" is not configured.');
+
+            return 1;
+        }
+
         $mergedComposer = ComposerHelper::getMergedIntegrationComposer($composer, $integration);
         if (!self::hasCacheForIntegration($integrationCacheDir)) {
             self::cacheIntegration($integrationCacheDir, $integrationComposer, $mergedComposer);

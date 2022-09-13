@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ComposerIntegration;
 
-final class WithMultipleComposerTest extends FixtureAwareComposerTestCase
+final class WithMultipleTest extends FixtureAwareComposerTestCase
 {
     private const FIXTURE_DIR = __DIR__ . DIRECTORY_SEPARATOR .'fixtures' . DIRECTORY_SEPARATOR . 'with-multiple';
 

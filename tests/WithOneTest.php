@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ComposerIntegration;
 
-final class WithOneComposerTest extends FixtureAwareComposerTestCase
+final class WithOneTest extends FixtureAwareComposerTestCase
 {
     private const FIXTURE_DIR = __DIR__ . DIRECTORY_SEPARATOR .'fixtures' . DIRECTORY_SEPARATOR . 'with-one';
 
