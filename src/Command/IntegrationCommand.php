@@ -56,7 +56,7 @@ final class IntegrationCommand extends BaseCommand
         }
 
         passthru(
-            sprintf('COMPOSER="%s" composer -n update --working-dir="%s"', $integrationComposer, Platform::getCwd()),
+            sprintf('COMPOSER="%s" composer -n install --working-dir="%s"', $integrationComposer, Platform::getCwd()),
             $status,
         );
 
