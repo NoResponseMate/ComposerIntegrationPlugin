@@ -20,8 +20,8 @@ final class ComposerHelper
         $originalComposerContent = self::decodeComposer($originalComposerPath);
         $integrationRequired = self::getIntegrationRequired($composer, $integration);
 
-        foreach ($integrationRequired as $packageName => $version) {
-            $originalComposerContent['require'][$packageName] = $version;
+        foreach ($integrationRequired as $package => $version) {
+            $originalComposerContent['require'][$package] = $version;
         }
 
         return json_encode($originalComposerContent);

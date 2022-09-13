@@ -19,18 +19,18 @@ final class Plugin implements PluginInterface, Capable
         ];
     }
 
-    public function activate(Composer $composer, IOInterface $io)
+    public function activate(Composer $composer, IOInterface $io): void
     {
-        // TODO: Implement activate() method.
+        // Nothing to see here, everything is applied via commands
     }
 
-    public function deactivate(Composer $composer, IOInterface $io)
+    public function deactivate(Composer $composer, IOInterface $io): void
     {
-        // TODO: Implement deactivate() method.
+        // Nothing to see here, everything is applied via commands
     }
 
-    public function uninstall(Composer $composer, IOInterface $io)
+    public function uninstall(Composer $composer, IOInterface $io): void
     {
-        // TODO: Implement uninstall() method.
+        // Nothing to see here, everything is applied via commands
     }
 }

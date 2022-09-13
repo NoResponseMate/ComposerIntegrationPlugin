@@ -15,7 +15,8 @@
 	},
 	"require-dev": {
 		"composer/composer": "^2.0",
-		"phpunit/phpunit": "^9.5"
+		"phpunit/phpunit": "^9.5",
+		"vimeo/psalm": "^4.19"
 	},
 	"autoload": {
 		"psr-4": {

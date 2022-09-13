@@ -32,7 +32,7 @@ final class IntegrationCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $integration = $input->getArgument(self::ARGUMENT_NAME);
+        $integration = (string) $input->getArgument(self::ARGUMENT_NAME);
 
         $composer = $this->requireComposer();
         $composerJsonPath = Factory::getComposerFile();
