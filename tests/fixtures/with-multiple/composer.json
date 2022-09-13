@@ -1,0 +1,48 @@
+{
+    "name": "no-response-mate/with-multiple",
+    "description": "Test project",
+    "license": "MIT",
+    "require": {
+        "php": "^8.0",
+        "composer/semver": "~3.2.0"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../../../*"
+        }
+    ],
+    "require-dev": {
+        "no-response-mate/composer-integration-plugin": "dev-%BRANCH%"
+    },
+    "autoload": {
+        "psr-4": {
+            "ComposerIntegration\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "no-response-mate/composer-integration-plugin": true
+        }
+    },
+    "extra": {
+        "integration": {
+            "first": {
+                "require": {
+                    "league/uri": "^6",
+                    "psr/http-factory": "^1"
+                }
+            },
+            "second": {
+                "require": {
+                    "psr/link": "^2"
+                }
+            },
+            "third": {
+                "require": {
+                    "psr/http-factory": "^1"
+                }
+            }
+        }
+    }
+}

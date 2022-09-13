@@ -1,22 +1,39 @@
 {
-	"name": "no-response-mate/composer-integration",
-	"description": "For quick switching between integrations' dependencies",
+	"name": "no-response-mate/composer-integration-plugin",
+	"description": "Quick switching between integrations' dependencies",
 	"type": "composer-plugin",
 	"license": "MIT",
 	"authors": [
 		{
 			"name": "Jan Góralski",
 			"email": "jan.wojciech.goralski@gmail.com"
-		}	
+		}
 	],
 	"require": {
-		"php": "^7.4 || ^8.0",
+		"php": "^8.0",
 		"composer-plugin-api": "^2.0"
+	},
+	"require-dev": {
+		"composer/composer": "^2.0",
+		"phpunit/phpunit": "^9.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"ComposerIntegration\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\ComposerIntegration\\": "tests/"
+		}
+	},
+	"extra": {
+		"class": "ComposerIntegration\\Plugin",
+		"branch-alias": {
+			"dev-main": "1.x-dev"
+		}
 	},
 	"config": {
 		"sort-packages": true
-	},
-	"require-dev": {
-		"phpunit/phpunit": "^9.5"
 	}
 }
