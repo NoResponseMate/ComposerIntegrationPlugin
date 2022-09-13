@@ -19,6 +19,9 @@ final class FileSystemHelper
     public static function callForEachFileInDir(callable $call, string $dir): void
     {
         $dirResource = opendir($dir);
+        if (false === $dirResource) {
+            throw new \RuntimeException('Directory "' . $dir . '" cannot be opened.');
+        }
         while (false !== $file = readdir($dirResource)) {
             if ('.' === $file || '..' === $file) {
                 continue;

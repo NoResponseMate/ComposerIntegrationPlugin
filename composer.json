@@ -15,6 +15,7 @@
 	},
 	"require-dev": {
 		"composer/composer": "^2.0",
+		"phpstan/phpstan": "^1.5.4",
 		"phpunit/phpunit": "^9.5",
 		"vimeo/psalm": "^4.19"
 	},

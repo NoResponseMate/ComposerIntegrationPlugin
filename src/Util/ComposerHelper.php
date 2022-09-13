@@ -11,7 +11,7 @@ final class ComposerHelper
 {
     public static function decodeComposer(string $path): array
     {
-        return json_decode(file_get_contents($path), true);
+        return json_decode((string) file_get_contents($path), true);
     }
 
     public static function getMergedIntegrationComposer(Composer $composer, string $integration): string
@@ -24,7 +24,7 @@ final class ComposerHelper
             $originalComposerContent['require'][$package] = $version;
         }
 
-        return json_encode($originalComposerContent);
+        return (string) json_encode($originalComposerContent);
     }
 
     public static function getIntegrationRequired(Composer $composer, string $integration): array
