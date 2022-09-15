@@ -31,7 +31,7 @@ abstract class FixtureAwareComposerTestCase extends TestCase
 
         $this->filesystem->mirror($fixtureDir . DIRECTORY_SEPARATOR, self::TEMP_DIR . DIRECTORY_SEPARATOR);
 
-        $this->replacePlaceholderBranch($this->getBranchName());
+        $this->replacePlaceholderVersion($this->getVersion());
     }
 
     public function tearDown(): void
@@ -86,18 +86,21 @@ abstract class FixtureAwareComposerTestCase extends TestCase
 
     abstract protected function getFixtureDir(): string;
 
-    private function getBranchName(): string
+    private function getVersion(): string
     {
-        $branch = exec('git rev-parse --abbrev-ref HEAD');
+        $version = exec('git rev-parse --abbrev-ref HEAD');
+        if ('HEAD' === $version) {
+            return '*';
+        }
 
-        return 'HEAD' === $branch ? 'main' : $branch;
+        return 'dev-' . $version;
     }
 
-    private function replacePlaceholderBranch(string $branchName): void
+    private function replacePlaceholderVersion(string $version): void
     {
         $tempComposer = self::TEMP_DIR . DIRECTORY_SEPARATOR . 'composer.json';
         $contents = file_get_contents($tempComposer);
-        $contents = strtr($contents, ['%BRANCH%' => $branchName, '%LOCAL_REPO%' => dirname(__DIR__)]);
+        $contents = strtr($contents, ['%VERSION%' => $version]);
         file_put_contents($tempComposer, $contents);
     }
 }
