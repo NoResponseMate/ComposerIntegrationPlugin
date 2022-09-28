@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\ComposerIntegration;
 
+use Composer\Util\Platform;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -11,7 +12,7 @@ abstract class FixtureAwareComposerTestCase extends TestCase
 {
     public const TEMP_DIR = __DIR__ . DIRECTORY_SEPARATOR . 'temp';
     private const TEMP_VENDOR = self::TEMP_DIR . DIRECTORY_SEPARATOR . 'vendor';
-    private const COMPOSER_COMMAND_TEMPLATE = 'composer integration %s -n --working-dir="' . self::TEMP_DIR . '" ';
+    private const COMPOSER_COMMAND_TEMPLATE = 'composer integration %s -n --working-dir="' . self::TEMP_DIR . '" %s';
 
     private Filesystem $filesystem;
 
@@ -19,9 +20,11 @@ abstract class FixtureAwareComposerTestCase extends TestCase
     {
         parent::setUp();
 
-        if (false === is_dir(self::TEMP_DIR) && !mkdir($concurrentDirectory = self::TEMP_DIR) && !is_dir($concurrentDirectory)) {
+        if (!is_dir(self::TEMP_DIR) && !mkdir($concurrentDirectory = self::TEMP_DIR) && !is_dir($concurrentDirectory)) {
             throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
         }
+
+        Platform::putEnv('COLUMNS', '120');
 
         $this->filesystem = new Filesystem();
 
@@ -46,9 +49,10 @@ abstract class FixtureAwareComposerTestCase extends TestCase
         @exec(sprintf('composer -n install --working-dir="%s" 2>&1', self::TEMP_DIR));
     }
 
-    public function runIntegration(string $integration): array
+    public function runIntegration(string $integration, array $options = []): array
     {
-        exec(sprintf(self::COMPOSER_COMMAND_TEMPLATE, $integration) . '2>&1', $output, $status);
+        $optionsString = implode(' ', $options);
+        exec(sprintf(self::COMPOSER_COMMAND_TEMPLATE, $integration, $optionsString) . ' 2>&1', $output, $status);
 
         $output = implode(PHP_EOL, $output);
         if ($status) {
