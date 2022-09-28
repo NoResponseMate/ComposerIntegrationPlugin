@@ -10,8 +10,6 @@ final class WithMultipleTest extends FixtureAwareComposerTestCase
 
     public function testMultipleIntegrationWithMultipleRequirements(): void
     {
-        $this->runCleanComposer();
-
         [, $status] = $this->runIntegration('first');
         $this->assertEquals(0, $status);
 

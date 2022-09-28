@@ -10,8 +10,6 @@ final class WithOneTest extends FixtureAwareComposerTestCase
 
     public function testOneIntegrationWithOneRequirement(): void
     {
-        $this->runCleanComposer();
-
         [, $status] = $this->runIntegration('with-one');
         $this->assertEquals(0, $status);
 

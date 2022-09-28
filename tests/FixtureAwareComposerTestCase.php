@@ -35,6 +35,8 @@ abstract class FixtureAwareComposerTestCase extends TestCase
         $this->filesystem->mirror($fixtureDir . DIRECTORY_SEPARATOR, self::TEMP_DIR . DIRECTORY_SEPARATOR);
 
         $this->replacePlaceholderVersion($this->getVersion());
+
+        $this->runCleanComposer();
     }
 
     public function tearDown(): void
@@ -46,7 +48,7 @@ abstract class FixtureAwareComposerTestCase extends TestCase
 
     public function runCleanComposer(): void
     {
-        @exec(sprintf('composer -n install --working-dir="%s" 2>&1', self::TEMP_DIR));
+        exec(sprintf('composer -n install --working-dir="%s" 2>&1', self::TEMP_DIR));
     }
 
     public function runIntegration(string $integration, array $options = []): array

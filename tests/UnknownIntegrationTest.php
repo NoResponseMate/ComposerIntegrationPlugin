@@ -10,8 +10,6 @@ final class UnknownIntegrationTest extends FixtureAwareComposerTestCase
 
     public function testMultipleIntegrationWithMultipleRequirements(): void
     {
-        $this->runCleanComposer();
-
         [, $status] = $this->runIntegration('first');
         $this->assertEquals(1, $status);
     }
