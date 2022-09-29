@@ -18,6 +18,7 @@ final class IntegrationCommand extends BaseCommand
 {
     public const NAME = 'integration';
     private const ARGUMENT_NAME = 'integration_name';
+    private const COMPOSER_BASE_TEMPLATE = 'COMPOSER="%s" composer -n %s --working-dir="%s"';
 
     protected function configure(): void
     {
@@ -26,18 +27,20 @@ final class IntegrationCommand extends BaseCommand
             ->setDescription('Install an integration\'s dependencies.')
             ->setDefinition(new InputDefinition([
                 new InputArgument(self::ARGUMENT_NAME, InputArgument::REQUIRED),
-            ]));
+            ]))
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $integration = (string) $input->getArgument(self::ARGUMENT_NAME);
+        $disableScripts = $input->getOption('no-scripts');
 
         $composer = $this->requireComposer();
 
         $integrationRequired = ComposerHelper::getIntegrationRequired($composer, $integration);
         if ([] === $integrationRequired) {
-            $output->writeln('Integration "' . $integration . '" is not configured.');
+            $output->writeln('Integration "' . $integration . '" is not configured.' . PHP_EOL);
 
             return 1;
         }
@@ -47,10 +50,19 @@ final class IntegrationCommand extends BaseCommand
 
         $integrationComposer = $cache->getCachedComposerFile();
 
-        passthru(
-            sprintf('COMPOSER="%s" composer -n install --working-dir="%s"', $integrationComposer, Platform::getCwd()),
-            $status,
-        );
+        $workingDir = Platform::getCwd();
+
+        Platform::putEnv('COMPOSER', $integrationComposer);
+
+        $installCommand = sprintf(self::COMPOSER_BASE_TEMPLATE, $integrationComposer, 'install', $workingDir);
+
+        if ($disableScripts) {
+            $installCommand .= ' --no-scripts';
+        }
+
+        passthru($installCommand, $status);
+
+        Platform::putEnv('COMPOSER', '');
 
         return $status;
     }
