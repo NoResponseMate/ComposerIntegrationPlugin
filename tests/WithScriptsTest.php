@@ -10,7 +10,7 @@ final class WithScriptsTest extends FixtureAwareComposerTestCase
 
     public function testOneIntegrationWithOneRequirementAndNoScripts(): void
     {
-        [$output, $status] = $this->runIntegration('with-scripts', ['--no-scripts']);
+        [$output, $status] = $this->runIntegration('with-scripts');
         $this->assertEquals(0, $status);
         $this->assertStringNotContainsString('Test script', $output);
 
@@ -20,7 +20,7 @@ final class WithScriptsTest extends FixtureAwareComposerTestCase
 
     public function testOneIntegrationWithOneRequirementAndScripts(): void
     {
-        [$output, $status] = $this->runIntegration('with-scripts');
+        [$output, $status] = $this->runIntegration('with-scripts', ['--with-scripts']);
         $this->assertEquals(0, $status);
         $this->assertStringContainsString('Test script', $output);
 
