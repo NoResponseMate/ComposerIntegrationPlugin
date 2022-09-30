@@ -8,8 +8,6 @@ Quick switching between integration dependencies
 composer require --dev no-response-mate/composer-integration-plugin
 ```
 
-## Configuration
-
 Add this plugin to allowed plugins:
 
 ```json
@@ -20,7 +18,9 @@ Add this plugin to allowed plugins:
 },
 ```
 
-Add your integration configuration:
+## Configuration
+
+Basic integration configuration:
 
 ```json
 "extra": {
@@ -30,6 +30,22 @@ Add your integration configuration:
                 "league/uri": "^6",
                 "psr/http-factory": "^1"
             }
+        }
+    }
+}
+```
+
+With a custom `APP_ENV` variable if you're using .env files
+
+```json
+"extra": {
+    "integration": {
+        "my-integration": {
+            "require": {
+                "league/uri": "^6",
+                "psr/http-factory": "^1"
+            },
+            "env": "my-integration-special-environment"
         }
     }
 }

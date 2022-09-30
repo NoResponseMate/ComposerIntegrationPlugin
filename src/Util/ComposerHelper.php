@@ -9,11 +9,6 @@ use Composer\Factory;
 
 final class ComposerHelper
 {
-    public static function decodeComposer(string $path): array
-    {
-        return json_decode((string) file_get_contents($path), true);
-    }
-
     public static function getMergedIntegrationComposer(Composer $composer, string $integration): string
     {
         $originalComposerPath = Factory::getComposerFile();
@@ -27,8 +22,23 @@ final class ComposerHelper
         return (string) json_encode($originalComposerContent);
     }
 
+    public static function decodeComposer(string $path): array
+    {
+        return json_decode((string) file_get_contents($path), true);
+    }
+
+    public static function getIntegrationEnv(Composer $composer, string $integration): string
+    {
+        return self::getIntegrationConfig($composer, $integration)['env'] ?? '';
+    }
+
     public static function getIntegrationRequired(Composer $composer, string $integration): array
     {
-        return $composer->getPackage()->getExtra()['integration'][$integration]['require'] ?? [];
+        return self::getIntegrationConfig($composer, $integration)['require'] ?? [];
+    }
+
+    private static function getIntegrationConfig(Composer $composer, string $integration): array
+    {
+        return $composer->getPackage()->getExtra()['integration'][$integration] ?? [];
     }
 }
