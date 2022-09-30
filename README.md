@@ -48,3 +48,13 @@ To return to your base composer dependencies simply run:
 ```bash
 composer install
 ```
+
+---
+
+By default, no scripts are run when installing an integration, if you would like to enable them use the `with-scripts` option:
+
+```bash
+composer integration my-integration --with-scripts
+```
+
+The plugin uses the `install` command internally and as such, only install related scripts would be run.
