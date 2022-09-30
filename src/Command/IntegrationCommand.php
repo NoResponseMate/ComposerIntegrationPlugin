@@ -12,6 +12,7 @@ use ComposerIntegration\Util\ComposerHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 final class IntegrationCommand extends BaseCommand
@@ -27,6 +28,7 @@ final class IntegrationCommand extends BaseCommand
             ->setDescription('Install an integration\'s dependencies.')
             ->setDefinition(new InputDefinition([
                 new InputArgument(self::ARGUMENT_NAME, InputArgument::REQUIRED),
+                new InputOption('with-scripts', mode: InputOption::VALUE_NONE)
             ]))
         ;
     }
@@ -34,7 +36,7 @@ final class IntegrationCommand extends BaseCommand
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $integration = (string) $input->getArgument(self::ARGUMENT_NAME);
-        $disableScripts = $input->getOption('no-scripts');
+        $enableScripts = $input->getOption('with-scripts');
 
         $composer = $this->requireComposer();
 
@@ -56,7 +58,7 @@ final class IntegrationCommand extends BaseCommand
 
         $installCommand = sprintf(self::COMPOSER_BASE_TEMPLATE, $integrationComposer, 'install', $workingDir);
 
-        if ($disableScripts) {
+        if (!$enableScripts) {
             $installCommand .= ' --no-scripts';
         }
 
