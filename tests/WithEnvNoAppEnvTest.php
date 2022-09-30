@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\ComposerIntegration;
 
-final class WithEnvTest extends FixtureAwareComposerTestCase
+final class WithEnvNoAppEnvTest extends FixtureAwareComposerTestCase
 {
-    private const FIXTURE_DIR = __DIR__ . DIRECTORY_SEPARATOR .'fixtures' . DIRECTORY_SEPARATOR . 'with-env';
+    private const FIXTURE_DIR = __DIR__ . DIRECTORY_SEPARATOR .'fixtures' . DIRECTORY_SEPARATOR . 'with-env-no-app-env';
 
     public function testOneIntegrationWithEnv(): void
     {

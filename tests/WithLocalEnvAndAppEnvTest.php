@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\ComposerIntegration;
 
-final class WithLocalEnvTest extends FixtureAwareComposerTestCase
+final class WithLocalEnvAndAppEnvTest extends FixtureAwareComposerTestCase
 {
-    private const FIXTURE_DIR = __DIR__ . DIRECTORY_SEPARATOR .'fixtures' . DIRECTORY_SEPARATOR . 'with-local-env';
+    private const FIXTURE_DIR = __DIR__ . DIRECTORY_SEPARATOR .'fixtures' . DIRECTORY_SEPARATOR . 'with-local-env-and-app-env';
 
     public function testIntegrationWithEnvDifferentThanInLocalEnv(): void
     {
