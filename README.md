@@ -35,21 +35,36 @@ Basic integration configuration:
 }
 ```
 
-With a custom `APP_ENV` variable if you're using .env files
+With a custom `APP_ENV` variable if you're using .env files:
 
 ```json
 "extra": {
     "integration": {
         "my-integration": {
-            "require": {
-                "league/uri": "^6",
-                "psr/http-factory": "^1"
-            },
+            ...
             "env": "my-integration-special-environment"
         }
     }
 }
 ```
+
+If your .env files are located somewhere else than project root, you can point to their location using the `integration-options.env-path` node:
+
+```json
+"extra": {
+    "integration-options": {
+        "env-path": "public/app/env/"
+    },
+    "integration": {
+        "my-integration": {
+            ...
+            "env": "my-integration-special-environment"
+        }
+    }
+}
+```
+
+The `env-directory` node takes in a path relative to your current working directory (usually project root).
 
 ## Usage
 

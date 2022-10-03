@@ -20,12 +20,12 @@ abstract class FixtureAwareComposerTestCase extends TestCase
     {
         parent::setUp();
 
+        $this->filesystem = new Filesystem();
+
         $this->removeTempDir();
         $this->createTempDir();
 
         Platform::putEnv('COLUMNS', '120');
-
-        $this->filesystem = new Filesystem();
 
         chmod(self::TEMP_DIR, 0755);
 
@@ -33,7 +33,7 @@ abstract class FixtureAwareComposerTestCase extends TestCase
 
         $this->filesystem->mirror($fixtureDir . DIRECTORY_SEPARATOR, self::TEMP_DIR . DIRECTORY_SEPARATOR);
 
-        $this->replacePlaceholderVersion($this->getVersion());
+        $this->replaceComposerFilePlaceholder('%VERSION%', $this->getVersion());
 
         $this->runCleanComposer();
     }
@@ -89,6 +89,11 @@ abstract class FixtureAwareComposerTestCase extends TestCase
         );
     }
 
+    protected function setComposerPlaceholderValue(string $placeholder, string $value): void
+    {
+        $this->replaceComposerFilePlaceholder($placeholder, $value);
+    }
+
     abstract protected function getFixtureDir(): string;
 
     private function getVersion(): string
@@ -101,11 +106,11 @@ abstract class FixtureAwareComposerTestCase extends TestCase
         return 'dev-' . $version;
     }
 
-    private function replacePlaceholderVersion(string $version): void
+    private function replaceComposerFilePlaceholder(string $placeholder, string $value): void
     {
         $tempComposer = self::TEMP_DIR . DIRECTORY_SEPARATOR . 'composer.json';
         $contents = file_get_contents($tempComposer);
-        $contents = strtr($contents, ['%VERSION%' => $version]);
+        $contents = strtr($contents, [$placeholder => $value]);
         file_put_contents($tempComposer, $contents);
     }
 
