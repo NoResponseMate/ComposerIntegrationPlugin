@@ -20,9 +20,8 @@ abstract class FixtureAwareComposerTestCase extends TestCase
     {
         parent::setUp();
 
-        if (!is_dir(self::TEMP_DIR) && !mkdir($concurrentDirectory = self::TEMP_DIR) && !is_dir($concurrentDirectory)) {
-            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
-        }
+        $this->removeTempDir();
+        $this->createTempDir();
 
         Platform::putEnv('COLUMNS', '120');
 
@@ -41,7 +40,7 @@ abstract class FixtureAwareComposerTestCase extends TestCase
 
     public function tearDown(): void
     {
-        $this->filesystem->remove(self::TEMP_DIR);
+        $this->removeTempDir();
 
         parent::tearDown();
     }
@@ -108,5 +107,24 @@ abstract class FixtureAwareComposerTestCase extends TestCase
         $contents = file_get_contents($tempComposer);
         $contents = strtr($contents, ['%VERSION%' => $version]);
         file_put_contents($tempComposer, $contents);
+    }
+
+    private function hasTempDir(): bool
+    {
+        return is_dir(self::TEMP_DIR);
+    }
+
+    private function removeTempDir(): void
+    {
+        if ($this->hasTempDir()) {
+            $this->filesystem->remove(self::TEMP_DIR);
+        }
+    }
+
+    private function createTempDir(): void
+    {
+        if (!mkdir($concurrentDirectory = self::TEMP_DIR) && !is_dir($concurrentDirectory)) {
+            throw new \RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+        }
     }
 }
