@@ -27,14 +27,29 @@ final class ComposerHelper
         return json_decode((string) file_get_contents($path), true);
     }
 
+    public static function getIntegrationRequired(Composer $composer, string $integration): array
+    {
+        return self::getIntegrationConfig($composer, $integration)['require'] ?? [];
+    }
+
     public static function getIntegrationEnv(Composer $composer, string $integration): string
     {
         return self::getIntegrationConfig($composer, $integration)['env'] ?? '';
     }
 
-    public static function getIntegrationRequired(Composer $composer, string $integration): array
+    public static function getEnvDirectory(Composer $composer, string $workingDir): string
     {
-        return self::getIntegrationConfig($composer, $integration)['require'] ?? [];
+        $customEnvDir = self::getIntegrationAdditionalOptions($composer)['env-path'] ?? null;
+        if (null === $customEnvDir) {
+            return $workingDir;
+        }
+
+        return (string) realpath($workingDir . DIRECTORY_SEPARATOR . ltrim($customEnvDir, DIRECTORY_SEPARATOR));
+    }
+
+    private static function getIntegrationAdditionalOptions(Composer $composer): array
+    {
+        return $composer->getPackage()->getExtra()['integration-options'] ?? [];
     }
 
     private static function getIntegrationConfig(Composer $composer, string $integration): array

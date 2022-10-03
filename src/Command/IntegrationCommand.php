@@ -52,10 +52,12 @@ final class IntegrationCommand extends BaseCommand
         $cache->cacheIntegrationIfNecessary($integrationRequired);
 
         $workingDir = Platform::getCwd();
+        $envDir = ComposerHelper::getEnvDirectory($composer, $workingDir);
 
         $integrationEnv = ComposerHelper::getIntegrationEnv($composer, $integration);
-        if ('' !== $integrationEnv && EnvHandler::hasEnv($workingDir)) {
-            EnvHandler::updateAppEnv($workingDir, $integrationEnv);
+
+        if ('' !== $integrationEnv && EnvHandler::hasEnv($envDir)) {
+            EnvHandler::updateAppEnv($envDir, $integrationEnv);
         }
 
         $installCommand = sprintf(self::COMPOSER_BASE_TEMPLATE, $cache->getCachedComposerFile(), 'install', $workingDir);
