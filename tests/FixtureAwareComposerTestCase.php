@@ -33,8 +33,6 @@ abstract class FixtureAwareComposerTestCase extends TestCase
 
         $this->filesystem->mirror($fixtureDir . DIRECTORY_SEPARATOR, self::TEMP_DIR . DIRECTORY_SEPARATOR);
 
-        $this->replaceComposerFilePlaceholder('%VERSION%', $this->getVersion());
-
         $this->runCleanComposer();
     }
 
@@ -95,16 +93,6 @@ abstract class FixtureAwareComposerTestCase extends TestCase
     }
 
     abstract protected function getFixtureDir(): string;
-
-    private function getVersion(): string
-    {
-        $version = exec('git rev-parse --abbrev-ref HEAD');
-        if ('HEAD' === $version) {
-            return '*';
-        }
-
-        return 'dev-' . $version;
-    }
 
     private function replaceComposerFilePlaceholder(string $placeholder, string $value): void
     {
