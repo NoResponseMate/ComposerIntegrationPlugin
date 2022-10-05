@@ -4,8 +4,9 @@ on:
     push:
         paths-ignore:
             - "*.md"
-    release:
-        types: [created]
+    pull_request:
+        paths-ignore:
+            - "*.md"
 
     workflow_dispatch: ~
 
@@ -19,6 +20,10 @@ jobs:
             fail-fast: false
             matrix:
                 php: ["8.0", "8.1"]
+
+        env:
+            COMPOSER_ROOT_VERSION: dev-main
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v2.3.3

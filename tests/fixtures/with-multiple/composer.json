@@ -13,7 +13,7 @@
         }
     ],
     "require-dev": {
-        "no-response-mate/composer-integration-plugin": "%VERSION%"
+        "no-response-mate/composer-integration-plugin": "dev-main"
     },
     "autoload": {
         "psr-4": {
