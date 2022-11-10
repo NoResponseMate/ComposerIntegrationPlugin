@@ -5,7 +5,7 @@ Quick switching between integration dependencies
 ## Installation
 
 ```bash
-composer require --dev no-response-mate/composer-integration-plugin
+composer require --dev sylius-labs/composer-integration-plugin
 ```
 
 Add this plugin to allowed plugins:
@@ -13,7 +13,7 @@ Add this plugin to allowed plugins:
 ```json
 "config": {
     "allow-plugins": {
-        "no-response-mate/composer-integration-plugin": true
+        "sylius-labs/composer-integration-plugin": true
     }
 },
 ```

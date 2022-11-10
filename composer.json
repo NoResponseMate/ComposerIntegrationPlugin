@@ -1,12 +1,11 @@
 {
-	"name": "no-response-mate/composer-integration-plugin",
+	"name": "sylius-labs/composer-integration-plugin",
 	"description": "Quick switching between integrations' dependencies",
 	"type": "composer-plugin",
 	"license": "MIT",
 	"authors": [
 		{
-			"name": "Jan Góralski",
-			"email": "jan.wojciech.goralski@gmail.com"
+			"name": "Sylius Labs"
 		}
 	],
 	"require": {

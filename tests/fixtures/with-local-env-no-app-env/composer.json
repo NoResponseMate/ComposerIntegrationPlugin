@@ -1,5 +1,5 @@
 {
-    "name": "no-response-mate/with-local-env",
+    "name": "test/with-local-env-no-app-env",
     "description": "Test project",
     "license": "MIT",
     "require": {
@@ -13,7 +13,7 @@
         }
     ],
     "require-dev": {
-        "no-response-mate/composer-integration-plugin": "dev-main"
+        "sylius-labs/composer-integration-plugin": "dev-main"
     },
     "autoload": {
         "psr-4": {
@@ -22,7 +22,7 @@
     },
     "config": {
         "allow-plugins": {
-            "no-response-mate/composer-integration-plugin": true
+            "sylius-labs/composer-integration-plugin": true
         }
     },
     "extra": {
